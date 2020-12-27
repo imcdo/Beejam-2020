@@ -20,13 +20,19 @@ namespace Team14
         private Target[] _targets;
         [SerializeField] private Target _targetPrefab;
         [SerializeField] private TargetConfigs _targetConfig;
-        
+
+
+        private void Start()
+        {
+            GenerateTargets();
+        }
 
         public void GenerateTargets()
         {
             Random rand = new Random();
-            var headgear = Enumerable.Range(1, _targetConfig.headwear.Length)
-                .OrderBy(x => rand.Next()).Take(TargetSpawns.Length).ToArray();
+            var headgear = _targetConfig.headwear
+                .OrderBy(x => rand.Next()).Take(TargetSpawns.Length).ToList();
+            
 
             if (_targets != null)
             {
@@ -39,8 +45,11 @@ namespace Team14
             {
                 Transform spawn = TargetSpawns[i];
                 _targets[i] = Instantiate(_targetPrefab, spawn);
-                _targets[i].Generate(_targetConfig.headwear[headgear[i]]);
+                _targets[i].Generate(headgear[i]);
             }
+            Target wanted = _targets[rand.Next(0, TargetSpawns.Length)];
+            wanted.IsWanted = true;
+
         }
 
     }

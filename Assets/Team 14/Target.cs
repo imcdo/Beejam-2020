@@ -12,6 +12,11 @@ namespace Team14
         [SerializeField] private SpriteRenderer _faceRenderer;
         [SerializeField] private Sprite[] _faceAnimation;
 
+        private void Start()
+        {
+            SetFaceSprite(_faceAnimation[0]);
+        }
+
         public void SetFaceSprite(Sprite sprite)
         {
             _faceRenderer.sprite = sprite;
