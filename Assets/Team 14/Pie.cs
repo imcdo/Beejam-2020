@@ -82,6 +82,8 @@ namespace Team14
         private void Fire()
         {
             PieState = State.Fire;
+            MinigameManager.Instance.PlaySound("Pie Throw");
+
             if (_routine != null) StopCoroutine(_routine);
             _routine = StartCoroutine(FireRoutine());
         }
