@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7807554211856679261}
   - component: {fileID: 7149332557329758584}
   - component: {fileID: 4082982902355697008}
+  - component: {fileID: 5471441654433479973}
+  - component: {fileID: -2589892189081656364}
   m_Layer: 0
   m_Name: beebase
   m_TagString: Untagged
@@ -130,6 +132,75 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2e8e21f8b3887e342a936805e3ac974c, type: 3}
   - {fileID: 21300000, guid: 238c68e43494ae545bc89d72d67a3a75, type: 3}
   - {fileID: 21300000, guid: 54b0154c0f5e0ad45b15f5129ec4c6c1, type: 3}
+  Generator: {fileID: 0}
+--- !u!114 &5471441654433479973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7238574215027102493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53a7e03d65e892c4788d5e79fee541bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bobCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0.022127414
+      outSlope: 0.022127414
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.023973942
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _bobSpeed: 1
+  _bobScale: 1
+--- !u!50 &-2589892189081656364
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7238574215027102493}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &7913366463344709729
 GameObject:
   m_ObjectHideFlags: 0

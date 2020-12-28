@@ -47,7 +47,7 @@ namespace Team14
             SetLayer(wanted.gameObject, LayerMask.NameToLayer("Object 1"));
 
             _wantedCamera.transform.position = new Vector3(wanted.transform.position.x, wanted.transform.position.y, -10);
-
+            _wantedCamera.transform.parent = wanted.transform;
             PieHunterManager.Instance.Pie.Reset();
         }
         public void GenerateTargets()

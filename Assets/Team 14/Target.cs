@@ -5,6 +5,7 @@ using UnityEngine;
 namespace Team14
 {
     [RequireComponent(typeof(Collider2D))]
+    [RequireComponent(typeof(Bob))]
     public class Target : MonoBehaviour
     {
         public bool IsWanted = false;
@@ -12,10 +13,12 @@ namespace Team14
         [SerializeField] private SpriteRenderer _faceRenderer;
         [SerializeField] private Sprite[] _faceAnimation;
 
+        private Bob _bob;
         public TargetGenerator Generator;
 
         private void Start()
         {
+            _bob = GetComponent<Bob>();
             SetFaceSprite(_faceAnimation[0]);
         }
 
@@ -51,6 +54,7 @@ namespace Team14
             if (pie)
             {
                 StartCoroutine(HitRoutine());
+                _bob.Stop();
 
                 if (IsWanted)
                 {
