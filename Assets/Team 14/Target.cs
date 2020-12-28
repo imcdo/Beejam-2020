@@ -55,12 +55,13 @@ namespace Team14
                 if (IsWanted)
                 {
                     PieHunterManager.Instance.Win();
+                    pie.Stop();
                 }
                 else
                 {
                     MinigameManager.Instance.PlaySound("Lose SFX");
-                    pie.Reset();
                     Generator.GenerateTargets();
+                    pie.Stop();
                 }
             }
         }

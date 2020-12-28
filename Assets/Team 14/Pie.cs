@@ -7,6 +7,7 @@ namespace Team14
 {
     [RequireComponent(typeof(Collider2D))]
     [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Animator))]
     public class Pie : MonoBehaviour
     {
         public enum State { Held, Fire, Disabled }
@@ -18,6 +19,7 @@ namespace Team14
         [SerializeField] private float _fireSpeed = 5;
 
         private SpriteRenderer _sr;
+        private Animator _animator;
         private Collider2D _collider;
 
         private float _minX;
@@ -49,7 +51,7 @@ namespace Team14
         {
             _sr = GetComponent<SpriteRenderer>();
             _collider = GetComponent<Collider2D>();
-
+            _animator = GetComponent<Animator>();
             Vector2 bl = Camera.main.ViewportToWorldPoint(Vector2.zero);
             Vector2 ur = Camera.main.ViewportToWorldPoint(Vector2.one);
 
@@ -75,8 +77,9 @@ namespace Team14
             }
             
             float x = Input.GetAxis("Horizontal");
-            if (InBounds())
-                transform.Translate(new Vector3(x * _moveSpeed * Time.deltaTime, 0, 0));
+            Vector3 translation = new Vector3(x * _moveSpeed * Time.deltaTime, 0, 0);
+            if (InBounds(transform.position + translation))
+                transform.Translate(translation);
         }
 
         private void Fire()
@@ -88,10 +91,18 @@ namespace Team14
             _routine = StartCoroutine(FireRoutine());
         }
 
+        public void Stop()
+        {
+            if (_routine != null)
+                StopCoroutine(_routine);
+            _animator.Play("PieExplode");
+        }
+
         private IEnumerator FireRoutine()
         {
-            Debug.Log("fire");
-            while (InBounds())
+            _animator.Play("PieThrow");
+
+            while (InBounds(transform.position))
             {
                 transform.Translate(new Vector3(0, _fireSpeed * Time.deltaTime, 0));
                 yield return null;
@@ -99,17 +110,17 @@ namespace Team14
             Reset();
         }
 
-        private bool InBounds()
+        private bool InBounds(Vector2 pos)
         {
-            return transform.position.x <= _maxX 
-                && transform.position.x >= _minX 
-                && transform.position.y <= _maxY;
+            return pos.x <= _maxX 
+                && pos.x >= _minX 
+                && pos.y <= _maxY;
         }
 
         public void Reset()
         {
             transform.position = _startPos;
-            PieState = State.Disabled;
+            PieState = State.Held;
             OnReset();
         }
 

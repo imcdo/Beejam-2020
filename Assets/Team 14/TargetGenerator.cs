@@ -48,7 +48,7 @@ namespace Team14
 
             _wantedCamera.transform.position = new Vector3(wanted.transform.position.x, wanted.transform.position.y, -10);
 
-            PieHunterManager.Instance.Pie.PieState = Pie.State.Held;
+            PieHunterManager.Instance.Pie.Reset();
         }
         public void GenerateTargets()
         {
