@@ -7,32 +7,26 @@ using Random = System.Random;
 
 namespace Team14
 {
-    [CreateAssetMenu(menuName="PieHunter/TargetConfig")]
-    public class TargetConfigs : ScriptableObject
-    {
-        public Sprite[] headwear;
-    }
-
     public class TargetGenerator : MonoBehaviour
     {
         public Transform[] TargetSpawns;
         
         private Target[] _targets;
         [SerializeField] private Target _targetPrefab;
-        [SerializeField] private TargetConfigs _targetConfig;
-
+        [SerializeField] private TargetConfig _targetConfig;
+        [SerializeField] private Camera _wantedCamera;
 
         private void Start()
         {
-            GenerateTargets();
+            StartCoroutine(GenerateTargetsRoutine(0));
         }
-
-        public void GenerateTargets()
+        private IEnumerator GenerateTargetsRoutine(float time)
         {
             Random rand = new Random();
             var headgear = _targetConfig.headwear
                 .OrderBy(x => rand.Next()).Take(TargetSpawns.Length).ToList();
-            
+
+            yield return new WaitForSeconds(time);
 
             if (_targets != null)
             {
@@ -40,17 +34,32 @@ namespace Team14
                     Destroy(t.gameObject);
             }
             _targets = new Target[TargetSpawns.Length];
-            
+
             for (int i = 0; i < TargetSpawns.Length; i++)
             {
                 Transform spawn = TargetSpawns[i];
                 _targets[i] = Instantiate(_targetPrefab, spawn);
                 _targets[i].Generate(headgear[i]);
+                _targets[i].Generator = this;
             }
             Target wanted = _targets[rand.Next(0, TargetSpawns.Length)];
             wanted.IsWanted = true;
+            SetLayer(wanted.gameObject, LayerMask.NameToLayer("Object 1"));
 
+            _wantedCamera.transform.position = new Vector3(wanted.transform.position.x, wanted.transform.position.y, -10);
+
+            PieHunterManager.Instance.Pie.PieState = Pie.State.Held;
+        }
+        public void GenerateTargets()
+        {
+            StartCoroutine(GenerateTargetsRoutine(1));
         }
 
+        private void SetLayer(GameObject g, int layer)
+        {
+            g.layer = layer;
+            foreach (Transform child in g.transform)
+                SetLayer(child.gameObject, layer);
+        }
     }
 }

@@ -12,6 +12,8 @@ namespace Team14
         [SerializeField] private SpriteRenderer _faceRenderer;
         [SerializeField] private Sprite[] _faceAnimation;
 
+        public TargetGenerator Generator;
+
         private void Start()
         {
             SetFaceSprite(_faceAnimation[0]);
@@ -52,17 +54,13 @@ namespace Team14
 
                 if (IsWanted)
                 {
-                    // WIN!!!
-
-                    MinigameManager.Instance.PlaySound("Win SFX");
-                    MinigameManager.Instance.minigame.gameWin = true;
-                    pie.Reset();
-
+                    PieHunterManager.Instance.Win();
                 }
                 else
                 {
                     MinigameManager.Instance.PlaySound("Lose SFX");
                     pie.Reset();
+                    Generator.GenerateTargets();
                 }
             }
         }

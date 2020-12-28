@@ -9,7 +9,7 @@ namespace Team14
     [RequireComponent(typeof(SpriteRenderer))]
     public class Pie : MonoBehaviour
     {
-        public enum State { Held, Fire }
+        public enum State { Held, Fire, Disabled }
 
         public Action OnFire = () => { };
         public Action OnReset = () => { };
@@ -109,7 +109,7 @@ namespace Team14
         public void Reset()
         {
             transform.position = _startPos;
-            PieState = State.Held;
+            PieState = State.Disabled;
             OnReset();
         }
 
