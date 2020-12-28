@@ -121,6 +121,7 @@ namespace Team14
         {
             transform.position = _startPos;
             PieState = State.Held;
+            _animator.Play("PieIdle");
             OnReset();
         }
 
