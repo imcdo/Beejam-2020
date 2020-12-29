@@ -15,6 +15,8 @@ namespace Team14
         public Action OnFire = () => { };
         public Action OnReset = () => { };
 
+        [SerializeField] private GameObject _controls;
+
         [SerializeField] private float _moveSpeed = 5;
         [SerializeField] private float _fireSpeed = 5;
 
@@ -71,12 +73,15 @@ namespace Team14
         {
             if (PieState != State.Held) return;
 
-            if (Input.GetButtonDown("Space"))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
             {
                 Fire();
+                _controls.SetActive(false);
             }
-            
+
             float x = Input.GetAxis("Horizontal");
+            if (x != 0) _controls.SetActive(false);
+
             Vector3 translation = new Vector3(x * _moveSpeed * Time.deltaTime, 0, 0);
             if (InBounds(transform.position + translation))
                 transform.Translate(translation);
